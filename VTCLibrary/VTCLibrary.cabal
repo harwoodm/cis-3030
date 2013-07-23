@@ -1,0 +1,24 @@
+name:           VTCLibrary
+version:        0.1
+cabal-version:  >=1.2
+build-type:     Simple
+author:         Peter C. Chapin
+
+library
+  hs-source-dirs:  src
+  build-depends:   base >= 4
+  ghc-options:     -Wall
+  other-modules:   VTC.List
+
+test-suite Check
+  type:            exitcode-stdio-1.0
+  main-is:         Check.hs
+  ghc-options:     -Wall -rtsopts
+  build-depends:   base >= 4, HTF > 0.9
+  other-modules:   
+                  VTC.List,
+                  VTC.ListTest
+  hs-source-dirs:  
+                  check,
+                  src
+
