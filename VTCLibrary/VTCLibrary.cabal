@@ -8,7 +8,9 @@ library
   hs-source-dirs:  src
   build-depends:   base >= 4
   ghc-options:     -Wall
-  other-modules:   VTC.List
+  other-modules:   
+                   VTC.List,
+                   VTC.PNG
 
 test-suite Check
   type:            exitcode-stdio-1.0
@@ -17,7 +19,8 @@ test-suite Check
   build-depends:   base >= 4, HTF > 0.9
   other-modules:   
                   VTC.List,
-                  VTC.ListTest
+                  VTC.ListTest,
+                  VTC.PNG
   hs-source-dirs:  
                   check,
                   src
