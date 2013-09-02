@@ -20,7 +20,8 @@ test-suite Check
   other-modules:   
                   VTC.List,
                   VTC.ListTest,
-                  VTC.PNG
+                  VTC.PNG,
+                  VTC.PNGTest
   hs-source-dirs:  
                   check,
                   src
