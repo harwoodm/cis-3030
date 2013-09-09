@@ -10,7 +10,8 @@ library
   ghc-options:     -Wall
   other-modules:   
                    VTC.List,
-                   VTC.PNG
+                   VTC.PNG,
+                   VTC.Numbers
 
 test-suite Check
   type:            exitcode-stdio-1.0
@@ -21,7 +22,9 @@ test-suite Check
                   VTC.List,
                   VTC.ListTest,
                   VTC.PNG,
-                  VTC.PNGTest
+                  VTC.PNGTest,
+                  VTC.Numbers,
+                  VTC.NumbersTest
   hs-source-dirs:  
                   check,
                   src
