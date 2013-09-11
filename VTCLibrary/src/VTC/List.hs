@@ -1,4 +1,6 @@
-module VTC.List(vlength, vreverse, vzip, vunzip) where
+module VTC.List(vlength, vreverse, vzip, vunzip, vfilter, vmap, vfoldl) where
+
+-- Some first order functions...
 
 vlength :: [a] -> Int
 vlength []     = 0
@@ -21,3 +23,23 @@ vunzip :: [(a, b)] -> ([a], [b])
 vunzip [] = ([], [])
 vunzip ((x, y):remainingPairs) = (x:xitems, y:yitems)
         where (xitems, yitems) = vunzip remainingPairs
+        
+
+-- Some higher order functions...
+        
+        
+vfilter :: (a -> Bool) -> [a] -> [a]
+vfilter _ [] = []
+vfilter predicate (x:xs)
+        | predicate x = x : vfilter predicate xs
+        | otherwise   = vfilter predicate xs
+
+
+vmap :: (a -> b) -> [a] -> [b]
+vmap _ [] = []
+vmap transformer (x:xs) = (transformer x) : vmap transformer xs
+
+
+vfoldl :: (b -> a -> b) -> b -> [a] -> b
+vfoldl _  accumulator [] = accumulator
+vfoldl combiner accumulator (x:xs) = vfoldl combiner (combiner accumulator x) xs
