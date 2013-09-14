@@ -21,26 +21,26 @@ splitPNG pngData = []
 -- Computes the CRC checksum over the given list using the algorithm in the PNG spec.
 computeCRC :: [Word8] -> Word32
 computeCRC rawData = complement $ foldl update 0xFFFFFFFF rawData
-                     where update :: Word32 -> Word8 -> Word32
-                           update c dataItem =
-                                  let cLowByte = fromIntegral (c .&. 0x000000FF)
-                                      index    = cLowByte `xor` dataItem
-                                      intIndex = fromIntegral index
-                                  in (crcTable !! intIndex) `xor` shift c (-8)
+    where update :: Word32 -> Word8 -> Word32
+          update c dataItem =
+              let cLowByte = fromIntegral (c .&. 0x000000FF)
+                  index    = cLowByte `xor` dataItem
+                  intIndex = fromIntegral index
+              in (crcTable !! intIndex) `xor` shift c (-8)
 
-                           crcTable :: [Word32]
-                           crcTable = [ processByte n | n <- [0 .. 255]]
-                                      where processByte :: Word32 -> Word32
-                                            processByte c = bitLoop 7 c
+          crcTable :: [Word32]
+          crcTable = [ processByte n | n <- [0 .. 255]]
+              where processByte :: Word32 -> Word32
+                    processByte c = bitLoop 7 c
 
-                                            bitLoop :: Int -> Word32 -> Word32
-                                            bitLoop 0       c = processBit c
-                                            bitLoop counter c = processBit $ bitLoop (counter - 1) c
+                    bitLoop :: Int -> Word32 -> Word32
+                    bitLoop 0       c = processBit c
+                    bitLoop counter c = processBit $ bitLoop (counter - 1) c
 
-                                            processBit :: Word32 -> Word32
-                                            processBit c
-                                                | testBit c 0 = 0xEDB88320 `xor` shift c (-1)
-                                                | otherwise   = shift c (-1)
+                    processBit :: Word32 -> Word32
+                    processBit c
+                        | testBit c 0 = 0xEDB88320 `xor` shift c (-1)
+                        | otherwise   = shift c (-1)
 
 
 -- Verifies the CRC checksum on each chunk in a list of chunks.
