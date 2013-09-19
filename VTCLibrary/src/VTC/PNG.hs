@@ -1,21 +1,34 @@
-module VTC.PNG(hasPNGHeader, chunkCount, splitPNG, computeCRC, verifyCRC) where
+module VTC.PNG(hasPNGHeader, chunkCount, splitPNG, computeCRC, verifyCRC, verifyPNG) where
 
-import           Data.Bits
-import           Data.Word
+import Data.Bits
+import Data.Word
 
 -- Returns True if the given list starts with a valid PNG signature.
 hasPNGHeader :: [Word8] -> Bool
-hasPNGHeader pngData = False
+hasPNGHeader pngData = take 8 pngData == [137, 80, 78, 71, 13, 10, 26, 10]
 
+-- Converts a list of exactly four big endian bytes into a Word32.
+extractWord32 :: [Word8] -> Word32
+extractWord32 byteSequence = foldl combineByte 0 byteSequence
+    where combineByte accumulator byte = shift accumulator 8 + fromIntegral byte
 
--- Returns the number of PNG chunks in the list.
+-- Returns the number of PNG chunks in the list. Here I assume the signature has been removed.
 chunkCount :: [Word8] -> Int
-chunkCount pngData = 0
+chunkCount [] = 0
+chunkCount pngData =
+    let chunkLength    = extractWord32 $ take 4 pngData
+        intChunkLength = fromIntegral chunkLength
+    in 1 + chunkCount (drop (intChunkLength + 12) pngData)
 
 
--- Breaks the PNG file into a list of its chunks.
+-- Breaks the PNG file into a list of its chunks. Here I assume the signature has been removed.
 splitPNG :: [Word8] -> [[Word8]]
-splitPNG pngData = []
+splitPNG [] = []
+splitPNG pngData =
+    let chunkLength    = extractWord32 $ take 4 pngData
+        intChunkLength = fromIntegral chunkLength
+        (headChunk, remainingChunks) = splitAt (intChunkLength + 12) pngData
+    in headChunk : splitPNG remainingChunks
 
 
 -- Computes the CRC checksum over the given list using the algorithm in the PNG spec.
@@ -45,4 +58,13 @@ computeCRC rawData = complement $ foldl update 0xFFFFFFFF rawData
 
 -- Verifies the CRC checksum on each chunk in a list of chunks.
 verifyCRC :: [[Word8]] -> [Bool]
-verifyCRC chunkList = []
+verifyCRC chunkList = map crcOkay chunkList
+    where crcOkay chunk =
+              let lengthlessChunk = drop 4 chunk
+                  (chunkData, crc) = splitAt (length lengthlessChunk - 4) lengthlessChunk
+              in computeCRC chunkData == extractWord32 crc
+              
+              
+-- Verifies that the given list is a valid PNG file.
+verifyPNG :: [Word8] -> Bool
+verifyPNG pngData = hasPNGHeader pngData && all (==True) (verifyCRC $ splitPNG pngData)
