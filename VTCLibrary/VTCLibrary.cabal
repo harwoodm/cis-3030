@@ -11,7 +11,8 @@ library
   other-modules:   
                    VTC.List,
                    VTC.PNG,
-                   VTC.Numbers
+                   VTC.Numbers,
+                   VTC.Tree
 
 test-suite Check
   type:            exitcode-stdio-1.0
@@ -24,7 +25,8 @@ test-suite Check
                   VTC.PNG,
                   VTC.PNGTest,
                   VTC.Numbers,
-                  VTC.NumbersTest
+                  VTC.NumbersTest,
+                  VTC.Tree
   hs-source-dirs:  
                   check,
                   src

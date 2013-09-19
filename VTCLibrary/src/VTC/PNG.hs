@@ -44,7 +44,7 @@ computeCRC rawData = complement $ foldl update 0xFFFFFFFF rawData
           crcTable :: [Word32]
           crcTable = [ processByte n | n <- [0 .. 255]]
               where processByte :: Word32 -> Word32
-                    processByte c = bitLoop 7 c
+                    processByte = bitLoop 7
 
                     bitLoop :: Int -> Word32 -> Word32
                     bitLoop 0       c = processBit c
