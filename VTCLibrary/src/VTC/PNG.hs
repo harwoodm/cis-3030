@@ -67,4 +67,4 @@ verifyCRC chunkList = map crcOkay chunkList
               
 -- Verifies that the given list is a valid PNG file.
 verifyPNG :: [Word8] -> Bool
-verifyPNG pngData = hasPNGHeader pngData && all (==True) (verifyCRC $ splitPNG pngData)
+verifyPNG pngData = hasPNGHeader pngData && all (==True) (verifyCRC $ splitPNG (drop 8 pngData))
