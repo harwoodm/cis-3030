@@ -6,13 +6,16 @@ author:         Peter C. Chapin
 
 library
   hs-source-dirs:  src
-  build-depends:   base >= 4
+  build-depends:   
+                   base >= 4,
+                   containers
   ghc-options:     -Wall
   other-modules:   
                    VTC.List,
                    VTC.PNG,
                    VTC.Numbers,
-                   VTC.Tree
+                   VTC.Tree,
+                   VTC.DFA
 
 test-suite Check
   type:            exitcode-stdio-1.0
@@ -26,7 +29,9 @@ test-suite Check
                   VTC.PNGTest,
                   VTC.Numbers,
                   VTC.NumbersTest,
-                  VTC.Tree
+                  VTC.Tree,
+                  VTC.DFA,
+                  VTC.DFATest
   hs-source-dirs:  
                   check,
                   src
