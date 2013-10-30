@@ -1,7 +1,23 @@
-module VTC.PNG(hasPNGHeader, chunkCount, splitPNG, computeCRC, verifyCRC, verifyPNG) where
+module VTC.PNG(PNG, PNGError(..), computeCRC, makePNG) where
 
 import Data.Bits
 import Data.Word
+
+data Chunk    = Chunk { chunkType :: [Word8], chunkData :: [Word8] }
+data PNG      = PNG [Chunk]
+data PNGError = BadSignature | BadChecksum [Int]
+
+makePNG :: [Word8] -> Either PNGError PNG
+makePNG pngData
+    | not (hasPNGHeader pngData) = Left BadSignature
+    | otherwise = let chunks  = splitPNG (drop 8 pngData)
+                      badList = filter (\(_, valid) -> not valid) $ zip [1..] (verifyCRC chunks)
+                  in if length badList /= 0
+                     then Left  $ BadChecksum (map (\(n, _) -> n) badList)
+                     else Right $ PNG (map unpackChunk chunks)
+                  where unpackChunk someChunk = 
+                                    Chunk { chunkType = drop 4 $ take 8 someChunk,
+                                            chunkData = drop 8 $ take ((length someChunk) - 4) someChunk }
 
 -- Returns True if the given list starts with a valid PNG signature.
 hasPNGHeader :: [Word8] -> Bool
