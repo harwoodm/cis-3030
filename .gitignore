@@ -1,1 +1,7 @@
+# Related to Haskell
 .dist-buildwrapper
+
+# Related to Scala
+workspace.xml
+build
+
