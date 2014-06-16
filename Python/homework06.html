@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- FILE         : homework06.xhtml
+     AUTHOR       : (C) Copyright 2006 by Peter Chapin
+     LAST REVISED : 2006-09-20
+     SUBJECT      : CIS-3030 Homework #6. -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>CIS-3030 Homework #6</title>
+  <meta name="Author" content="Peter C. Chapin" />
+  <meta name="ROBOTS" content="NOINDEX,NOFOLLOW,NOARCHIVE" />
+  <link rel="stylesheet" href="default.css" type="text/css" />
+</head>
+
+<body>
+<h1>CIS-3030 Homework #6</h1>
+
+<p>For information on Python consult the documentation on the main Python web
+site. The page at <a
+href="http://www.python.org/doc/">http://www.python.org/doc/</a> contains
+links to a Python tutorial and also reference manuals for the language and
+library. The tutorial is detailed and reasonably well written, but it is also
+fairly long. I encourage you to read sections of it, but you'll want to
+browse the table of contents for the sections that are most relevant to
+you.</p>
+
+<p>You should also browse over the book Learning Python on <a
+href="https://libraries.vsc.edu/proxy/onoffproxylinks.asp?campus=VTC&amp;db=SAFARI">VTC's
+Safari site</a>. The book is an excellent introduction to the language and
+covers both basic and advanced topics.</p>
+<ol>
+  <li><p>Write a Python function that takes a list of numbers and computes
+    the average of all values in the list, the minimum value in the list, and
+    the maximum value in the list. Your function should return these results
+    in a tuple.</p>
+  </li>
+  <li><p>Write a Python program that outputs a list of all files in the
+    current directory and all subdirectories recursively. You will want to
+    use the <code>os.listdir()</code> and the <code>os.path.isdir()</code>
+    functions. Consult the Python documentation for more information. Hint:
+    Write a recursive function that scans the current directory and calls
+    itself for each subdirectory it finds. The function should return of all
+    the files it discovers, together with the files discovered by the
+    recursive calls. (Imagine that this program is part of a larger backup
+    utility of some kind)</p>
+  </li>
+  <li><p>Sometimes it is useful to enforce a limit on the size of a list.
+    Write a Python class named <code>BoundedList</code>, in a module named
+    <code>bounded.py</code>, that encapsulates an ordinary list but prevents
+    the list from growing larger than a given size. The size to be used
+    should be a parameter of the class constructor (so different instances
+    could have different sizes). Your class should provide a method named
+    <code>append()</code> that can be used to append new items to the bounded
+    list. You should also define the <code>__len__()</code>,
+    <code>__getitem__()</code>, and <code>__setitem__()</code> methods. These
+    methods will allow you to use a BoundedList much like an ordinary list.
+    See section 3.4.5 in the language reference manual for more details.
+    Write a short program that demonstrates your class.</p>
+  </li>
+</ol>
+<hr />
+
+<div class="signature-block">
+Last Revised: 2008-11-10<br />
+© Copyright 2008 by Peter C. Chapin &lt;<a
+href="mailto:Peter.Chapin@vtc.vsc.edu">Peter.Chapin@vtc.vsc.edu</a>&gt; </div>
+</body>
+</html>

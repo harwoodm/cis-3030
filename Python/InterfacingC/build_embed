@@ -1,0 +1,4 @@
+#!/bin/bash
+
+gcc -o embed -I/usr/include/python embed.c -L/usr/lib64/python/config -lpython2.4 -lm -pthread -ldl -lutil
+

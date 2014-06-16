@@ -1,0 +1,5 @@
+
+This is a simple test file. It is intended to help me explore how to do
+file I/O operations in OCaml.
+
+Peter

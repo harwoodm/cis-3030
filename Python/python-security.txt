@@ -1,0 +1,71 @@
+From rms@computerbytesman.com Wed Jan 16 08:15:42 2002
+Date: Tue, 15 Jan 2002 14:48:05 -0500
+From: Richard M. Smith <rms@computerbytesman.com>
+To: bugtraq@securityfocus.com
+Subject: Serious privacy leak in Python for Windows
+
+Hello,
+
+There is a privacy leak problem in many Python implementations 
+for Windows which allow a malicious Web page or HTML email message 
+to read the contents of file from a user's hard drive and send the 
+contents back to a Web site.  The problem occurs in Windows Python 
+implementations that supports Python as a scripting language for Web 
+pages in Internet Explorer.  
+
+The problem exists because the Python runtime library does not 
+consider file read operations to be a security risk.  File read 
+operations are allowed to execute on a Web page without restriction.  
+File write operations, on the other hand, are blocked.
+
+For example, the following Python code on a Web page will
+run successfully:
+
+   <SCRIPT language=python>
+   import __builtin__
+   myfile = __builtin__.open("c:\\autoexec.bat")
+   document.write(str(myfile.readlines()))
+   myfile.close()
+   </SCRIPT>
+
+This particular example opens the file c:\autoexec.bat and writes 
+the file contents to the Web page.  The program could easily 
+be changed to send the contents of the file back to a Web site 
+by using an HTML form, a Web bug, or the Microsoft XML HTTP 
+ActiveX control.
+
+Here is a second example, that shows a directory listing of C:\ on a Web
+page:
+
+   <SCRIPT language=python>
+   import os
+   for file in os.listdir("c:\\"):
+      document.writeln(file, "<br>");
+   </SCRIPT>
+
+This directory listing example is available online to test to see 
+if a particular computer system is vulnerable to the problem or not:
+
+   http://www.computerbytesman.com/privacy/pythondirdemo.htm
+
+To fix this privacy leak, the Python runtime library should block 
+all file operations when Python code is being used on a Web page, 
+not just file write operations.
+
+There might also be workarounds to this problem either in 
+Microsoft's ActiveScripting support in IE or in the Python 
+runtime library.  However, I am not an expert on either 
+technology to know what these work-arounds might be.  Please 
+drop me an email if you have any suggestions.
+
+Richard M. Smith
+http://www.computerbytesman.com
+
+
+
+
+
+
+
+
+
