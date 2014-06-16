@@ -12,7 +12,6 @@ library
   ghc-options:     -Wall
   other-modules:   
                    VTC.List,
-                   VTC.PNG,
                    VTC.Numbers,
                    VTC.Tree,
                    VTC.DFA
@@ -25,8 +24,6 @@ test-suite Check
   other-modules:   
                   VTC.List,
                   VTC.ListTest,
-                  VTC.PNG,
-                  VTC.PNGTest,
                   VTC.Numbers,
                   VTC.NumbersTest,
                   VTC.Tree,
